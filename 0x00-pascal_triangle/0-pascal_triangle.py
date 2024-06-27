@@ -1,26 +1,29 @@
-def pascal_triangle(n):
+#!/usr/bin/env python3
+from typing import List
+
+
+def pascal_triangle(n: int) -> List[list]:
+    '''
+    Pascal triangle
+    '''
     if n <= 0:
         return []
 
-    triangle = [[1]]  # Initialize the first row of Pascal's triangle
+    if n == 1:
+        return [[1]]
 
-    for i in range(1, n):
-        row = [1]  # First element of each row is always 1
-        for j in range(1, i):
-            row.append(triangle[i-1][j-1] + triangle[i-1][j])
-        row.append(1)  # Last element of each row is always 1
-        triangle.append(row)
+    if n == 2:
+        return [[1], [1, 1]]
+
+    triangle = [[1], [1, 1]]
+
+    for i in range(2, n):
+        temp = [1, 1]
+        for j in range(0, len(triangle[-1])-1):
+            a = triangle[-1][j]
+            b = triangle[-1][j+1]
+            temp.insert(-1, a + b)
+        triangle.append(temp)
 
     return triangle
-
-
-if __name__ == "__main__":
-    def print_triangle(triangle):
-        """
-        Print the triangle
-        """
-        for row in triangle:
-            print("[{}]".format(",".join([str(x) for x in row])))
-
-    print_triangle(pascal_triangle(5))
 
